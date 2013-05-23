@@ -28,9 +28,9 @@ var potionRegex = /(\w+)\spotion/;
 
 /**
  * Gets a stored value
- * @param {string} name The name of an item
- * @param {object} def A default value when the item is undefined
- * @return {object} The value corresponding to the name
+ * @param {string} name         The name of an item
+ * @param {object} def          A default value when the item is undefined
+ * @return {object}             The value corresponding to the name
  **/
 function getValue(name, def){
     var val = localStorage.getItem(name);
@@ -39,8 +39,8 @@ function getValue(name, def){
 
 /**
  * Sets a stored value
- * @param {string} name The name of an item
- * @param {object} value The value of the item
+ * @param {string} name         The name of an item
+ * @param {object} value        The value of the item
  **/
 function setValue(name, value){
     localStorage.setItem(name, value);
@@ -48,7 +48,7 @@ function setValue(name, value){
 
 /**
  * Deletes a stored value
- * @param {string} name The name of an item
+ * @param {string} name         The name of an item
  **/
 function deleteValue(name){
     localStorage.removeItem(name);
@@ -56,8 +56,8 @@ function deleteValue(name){
 
 /**
  * Gets the index of which Bang potion effect uses a specific string
- * @param {string} str An inventory or combat string
- * @return {int} The index of the bang potion effect
+ * @param {string} str          An inventory or combat string
+ * @return {int}                The index of the bang potion effect
  **/
 function getBangId(str){
 	for (var i = bangEffects.length; i--;){
@@ -71,7 +71,7 @@ function getBangId(str){
 
 /**
  * Gets the Character name.
- * @return {string} A character's name
+ * @return {string}             A character's name
  **/
 function getCharName(){
 	if (getValue('CurrentCharName', null))
