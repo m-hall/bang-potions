@@ -61,15 +61,12 @@ function getCharName(){
 
 function checkInventory(){
 	var charName = getCharName();
-	if (!charName){
-		return;
-	}
 	var effdiv = document.querySelector('#effdiv');
-	if (!effdiv){
+	if (!charName || !effdiv || effdiv.innerHTML === window.lastEffDiv){
 		return;
 	}
 	var m = effdiv.innerText.match(invNameRegex);
-	if (!m || getValue(charName+m[1], null)) {
+	if (!m || getValue(charName+m[1], null) !== null) {
 		return;
 	}
 	if (bangNames.indexOf(m[1]) > -1){
@@ -82,6 +79,7 @@ function checkInventory(){
 		}
 		effdiv.querySelector('blockquote').innerHTML += '<center>The "'+name+'" potion is the '+bangEffects[i].name+' potion.</center>';
 	}
+	window.lastEffDiv = effDiv.innerHTML;
 }
 
 function doInventory(){
@@ -96,7 +94,6 @@ function doInventory(){
 		var m = name.match(potionRegex);
 		if (m && m[1]){
 			var eff = getValue(charName+m[1]);
-			console.log(eff);
 			if (!eff){
 				continue;
 			}
