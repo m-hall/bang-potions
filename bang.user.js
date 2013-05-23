@@ -8,16 +8,6 @@
 // ==/UserScript==
 
 
-function getValue(name, def){
-    var val = localStorage.getItem(name);
-    return (val || val === 0) ? val : def;
-}
-function setValue(name, value){
-    return localStorage.setItem(name, value);
-}
-function deleteValue(name){
-    return localStorage.removeItem(name);
-}
 var bangNames = ["milky", "swirly", "bubbly", "smoky", "cloudy", "effervescent", "fizzy", "dark", "murky"];
 var bangEffects = [
 	{ name: 'drunk', inventory: 'liquid fire', combat: 'like a wino' }, //drunk
@@ -35,6 +25,40 @@ var invNameRegex = /You drink the (\w+) potion./;
 var potionRegex = /(\w+)\spotion/;
 
 
+
+/**
+ * Gets a stored value
+ * @param {string} name The name of an item
+ * @param {object} def A default value when the item is undefined
+ * @return {object} The value corresponding to the name
+ **/
+function getValue(name, def){
+    var val = localStorage.getItem(name);
+    return (val || val === 0) ? val : def;
+}
+
+/**
+ * Sets a stored value
+ * @param {string} name The name of an item
+ * @param {object} value The value of the item
+ **/
+function setValue(name, value){
+    localStorage.setItem(name, value);
+}
+
+/**
+ * Deletes a stored value
+ * @param {string} name The name of an item
+ **/
+function deleteValue(name){
+    localStorage.removeItem(name);
+}
+
+/**
+ * Gets the index of which Bang potion effect uses a specific string
+ * @param {string} str An inventory or combat string
+ * @return {int} The index of the bang potion effect
+ **/
 function getBangId(str){
 	for (var i = bangEffects.length; i--;){
 		var bang = bangEffects[i];
@@ -44,6 +68,11 @@ function getBangId(str){
 	}
 	return -1;
 }
+
+/**
+ * Gets the Character name.
+ * @return {string} A character's name
+ **/
 function getCharName(){
 	if (getValue('CurrentCharName', null))
 		return getValue('CurrentCharName')
@@ -59,6 +88,9 @@ function getCharName(){
 	return charName;
 }
 
+/**
+ * Checks to see if the Results of using a potion has shown up.
+ **/
 function checkInventory(){
 	var charName = getCharName();
 	var effdiv = document.querySelector('#effdiv');
@@ -82,6 +114,9 @@ function checkInventory(){
 	window.lastEffDiv = effDiv.innerHTML;
 }
 
+/**
+ * Adds the type to each of the potions in the inventory.
+ **/
 function doInventory(){
 	var charName = getCharName();
 	if (!charName){
@@ -101,8 +136,11 @@ function doInventory(){
 			node.innerHTML +='<span style="color:blue">'+bangEffects[parseInt(eff)].name+"</span>";
 		}
 	}
-	setInterval(checkInventory, 500);
 }
+
+/**
+ * Checks for potions used during combat
+ **/
 function doFight(){
 	var charName = getCharName();
 	if (!charName){
@@ -124,6 +162,10 @@ function doFight(){
 	div.style.textAlign = 'center';
 	div.innerHTML = 'The "'+pName+'" potion is the '+bangEffects[eff].name+' potion.';
 }
+
+/**
+ * Clears the current character data
+ **/
 function clearChar(){
 	var charName = getCharName();
 	if (!charName){
@@ -138,6 +180,7 @@ function clearChar(){
 switch(window.location.pathname) {
 	case '/inventory.php':
 		doInventory();
+		setInterval(checkInventory, 500);
 		break;
 	case '/fight.php':
 		doFight();
