@@ -4,6 +4,7 @@
 // @include        *kingdomofloathing.com/fight.php*
 // @include        *kingdomofloathing.com/inventory.php*
 // @include        *kingdomofloathing.com/afterlife.php*
+// @version        1.0
 // ==/UserScript==
 
 
@@ -57,7 +58,8 @@ function getCharName(){
 	setValue('CurrentCharName', charName)
 	return charName;
 }
-/*function checkInventory(){
+
+function checkInventory(){
 	var charName = getCharName();
 	if (!charName){
 		return;
@@ -67,7 +69,7 @@ function getCharName(){
 		return;
 	}
 	var m = effdiv.innerText.match(invNameRegex);
-	if (isInt(getValue(charName+m[1]))){
+	if (!m || getValue(charName+m[1], null)) {
 		return;
 	}
 	if (bangNames.indexOf(m[1]) > -1){
@@ -78,8 +80,10 @@ function getCharName(){
 				break;
 			}
 		}
+		effdiv.querySelector('blockquote').innerHTML += '<center>The "'+name+'" potion is the '+bangEffects[i].name+' potion.</center>';
 	}
-}*/
+}
+
 function doInventory(){
 	var charName = getCharName();
 	if (!charName){
@@ -100,7 +104,7 @@ function doInventory(){
 			node.innerHTML +='<span style="color:blue">'+bangEffects[parseInt(eff)].name+"</span>";
 		}
 	}
-	//setInterval(checkInventory, 500);
+	setInterval(checkInventory, 500);
 }
 function doFight(){
 	var charName = getCharName();
