@@ -1,7 +1,6 @@
 // ==UserScript==
 // @name           Bang Potion Helper
 // @include        *kingdomofloathing.com/game.php*
-// @include        *kingdomofloathing.com/charsheet.php*
 // @include        *kingdomofloathing.com/fight.php*
 // @include        *kingdomofloathing.com/inventory.php*
 // @include        *kingdomofloathing.com/afterlife.php*
